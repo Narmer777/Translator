@@ -1,0 +1,22 @@
+<SyntaxDefinition name="IL" xmlns="http://icsharpcode.net/sharpdevelop/syntaxdefinition/2008">
+    <Color name="Comment" foreground="Green" fontStyle="italic" />
+    <Color name="Instruction" foreground="Blue" fontWeight="bold" />
+    <Color name="Label" foreground="Teal" fontWeight="bold" />
+    
+    <RuleSet>
+        <Span color="Comment" multiline="true">
+            <Begin>\(\*</Begin>
+            <End>\*\)</End>
+        </Span>
+        
+        <Keywords color="Instruction">
+            <Word>LD</Word> <Word>LDN</Word> <Word>ST</Word> <Word>S</Word> <Word>R</Word>
+            <Word>AND</Word> <Word>ANDN</Word> <Word>OR</Word> <Word>ORN</Word>
+            <Word>XOR</Word> <Word>XORN</Word> <Word>NOT</Word> <Word>CAL</Word>
+            <Word>JMP</Word> <Word>JMPCN</Word>
+            <Word>EQ</Word> <Word>NE</Word> <Word>GT</Word> <Word>LT</Word> <Word>GE</Word> <Word>LE</Word>
+        </Keywords>
+
+        <Rule color="Label">^[ \t]*[a-zA-Z_][a-zA-Z0-9_]*[ \t]*:</Rule>
+    </RuleSet>
+</SyntaxDefinition>

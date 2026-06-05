@@ -1,0 +1,27 @@
+<SyntaxDefinition name="ST" xmlns="http://icsharpcode.net/sharpdevelop/syntaxdefinition/2008">
+    <Color name="Comment" foreground="Green" fontStyle="italic" />
+    <Color name="Keyword" foreground="Blue" fontWeight="bold" />
+    <Color name="Number" foreground="DarkMagenta" />
+    
+    <RuleSet>
+        <Span color="Comment" multiline="true">
+            <Begin>\(\*</Begin>
+            <End>\*\)</End>
+        </Span>
+        
+        <Keywords color="Keyword">
+            <Word>IF</Word>
+            <Word>THEN</Word>
+            <Word>ELSIF</Word>
+            <Word>ELSE</Word>
+            <Word>END_IF</Word>
+            <Word>AND</Word>
+            <Word>OR</Word>
+            <Word>NOT</Word>
+            <Word>TRUE</Word>
+            <Word>FALSE</Word>
+        </Keywords>
+        
+        <Rule color="Number">\b0[xX][0-9a-fA-F]+|(\b\d+(\.[0-9]+)?|\.[0-9]+)([eE][+-]?[0-9]+)?</Rule>
+    </RuleSet>
+</SyntaxDefinition>

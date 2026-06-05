@@ -1,0 +1,71 @@
+name: Manual Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Release tag, for example v1.0.0"
+        required: true
+        default: "v1.0.0"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: Build and publish release
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "8.0.x"
+
+      - name: Restore
+        run: dotnet restore
+
+      - name: Build
+        run: dotnet build --configuration Release --no-restore
+
+      - name: Test
+        run: dotnet test --configuration Release --no-build
+
+      - name: Restore publish runtime
+        run: dotnet restore Translator\Translator.csproj --runtime win-x64
+
+      - name: Publish win-x64
+        run: >
+          dotnet publish Translator\Translator.csproj
+          --configuration Release
+          --runtime win-x64
+          --self-contained true
+          --no-restore
+          --output publish\Translator-win-x64
+
+      - name: Create archive
+        shell: pwsh
+        run: |
+          $version = "${{ inputs.version }}"
+          $archive = "Translator-$version-win-x64.zip"
+          Compress-Archive -Path "publish\Translator-win-x64\*" -DestinationPath "publish\$archive" -Force
+          "RELEASE_ARCHIVE=publish\$archive" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Translator-${{ inputs.version }}-win-x64
+          path: ${{ env.RELEASE_ARCHIVE }}
+
+      - name: Create GitHub Release
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          $version = "${{ inputs.version }}"
+          gh release create $version $env:RELEASE_ARCHIVE `
+            --title "Translator $version" `
+            --notes "Manual release of Translator for Windows x64. The application translates the supported ST/LTL subset to IL and LD export formats for CoDeSys 2.3."

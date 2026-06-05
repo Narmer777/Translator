@@ -1,0 +1,286 @@
+﻿<Window x:Class="Translator.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Translator"
+        xmlns:avalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit"
+        mc:Ignorable="d"
+        Title="Translator" Height="760" Width="1150" 
+        MinWidth="950" MinHeight="650" 
+        WindowStartupLocation="CenterScreen"
+        Background="#E8ECEF"
+        FontFamily="Consolas"
+        FontSize="14"
+        WindowStyle="None" 
+        AllowsTransparency="True"
+        BorderThickness="1"
+        BorderBrush="#555555">
+
+    <Window.Resources>
+        <Style x:Key="WindowControlButton" TargetType="Button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#CCCCCC"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Width" Value="46"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#3E3E42"/>
+                                <Setter Property="Foreground" Value="White"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="WindowCloseButton" TargetType="Button" BasedOn="{StaticResource WindowControlButton}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#E81123"/>
+                                <Setter Property="Foreground" Value="White"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="IconButton" TargetType="Button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Width" Value="28"/>
+            <Setter Property="Height" Value="28"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="3">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#D0D4D9"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" Value="#BFC4C9"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="MainActionButton" TargetType="Button">
+            <Setter Property="Background" Value="#107C41"/>
+            <Setter Property="BorderBrush" Value="#0B5D30"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" 
+                                BorderBrush="{TemplateBinding BorderBrush}" 
+                                BorderThickness="{TemplateBinding BorderThickness}" 
+                                CornerRadius="2">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#128E4A"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Background" Value="#0A522A"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="32"/>
+            <RowDefinition x:Name="MenuRow" Height="Auto"/>
+            <RowDefinition x:Name="SettingsRow" Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition x:Name="ConsoleSplitterRow" Height="5"/>
+            <RowDefinition x:Name="ConsoleRow" Height="220"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0" Background="#2D2D30" MouseLeftButtonDown="TopBar_MouseLeftButtonDown">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="10,0,0,0">
+                <Path Data="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4M11,7V13H17V11H13V7H11Z" 
+                      Fill="#0072C6" Stretch="Uniform" Width="16" Height="16" Margin="0,0,8,0"/>
+                <TextBlock x:Name="AppTitleText" Text="TRANSLATOR" Foreground="#CCCCCC" FontFamily="Consolas" FontWeight="Bold" FontSize="13" VerticalAlignment="Center"/>
+            </StackPanel>
+
+            <StackPanel Grid.Column="1" Orientation="Horizontal">
+                <Button Style="{StaticResource WindowControlButton}" Click="MinimizeWindow_Click">
+                    <Path Data="M0,5H10V6H0V5Z" Fill="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}" Stretch="None"/>
+                </Button>
+                <Button Style="{StaticResource WindowControlButton}" Click="MaximizeWindow_Click">
+                    <Path Data="M1,1H9V9H1V1M2,2V8H8V2H2Z" Fill="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}" Stretch="None"/>
+                </Button>
+                <Button Style="{StaticResource WindowCloseButton}" Click="CloseWindow_Click">
+                    <Path Data="M1,1L9,9M9,1L1,9" Stroke="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}" StrokeThickness="1.2" Stretch="None"/>
+                </Button>
+            </StackPanel>
+        </Grid>
+
+        <Border Grid.Row="1" x:Name="MenuBorder" Background="#F8F9FA" BorderBrush="#999999" BorderThickness="0,0,0,2">
+            <Menu Background="Transparent" Margin="5,2" FontFamily="Consolas">
+                <MenuItem x:Name="MenuFileRoot" Header="File" FontSize="14" FontWeight="SemiBold">
+                    <MenuItem x:Name="MenuOpenFile" Header="Открыть файл..." Click="MenuOpenFile_Click">
+                        <MenuItem.Icon>
+                            <Path Data="M10,4H4C2.9,4 2,4.9 2,6V18A2,2 0 0,0 4,20H20A2,2 0 0,0 22,18V8A2,2 0 0,0 20,6H12L10,4Z" Fill="#0072C6" Stretch="Uniform" Width="16" Height="16"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem x:Name="MenuSaveFile" Header="Сохранить как..." Click="MenuSaveFile_Click">
+                        <MenuItem.Icon>
+                            <Path Data="M15,9H5V5H15M12,19A3,3 0 0,1 9,16A3,3 0 0,1 12,13A3,3 0 0,1 15,16A3,3 0 0,1 12,19M17,3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V7L17,3Z" Fill="#0072C6" Stretch="Uniform" Width="16" Height="16"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <Separator />
+                    <MenuItem x:Name="MenuExit" Header="Выход" Click="MenuExit_Click">
+                        <MenuItem.Icon>
+                            <Path Data="M16,17V14H9V10H16V7L21,12L16,17M14,2A2,2 0 0,1 16,4V6H14V4H5V20H14V18H16V20A2,2 0 0,1 14,22H5A2,2 0 0,1 3,20V4A2,2 0 0,1 5,2H14Z" Fill="#D32F2F" Stretch="Uniform" Width="16" Height="16"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </MenuItem>
+                <MenuItem x:Name="MenuSettingsRoot" Header="Settings" FontSize="14" FontWeight="SemiBold">
+                    <MenuItem x:Name="MenuLanguageRoot" Header="Language">
+                        <MenuItem x:Name="MenuLanguageRussian" Header="Русский" IsCheckable="True" Click="MenuLanguageRussian_Click"/>
+                        <MenuItem x:Name="MenuLanguageEnglish" Header="English" IsCheckable="True" Click="MenuLanguageEnglish_Click"/>
+                    </MenuItem>
+                    <Separator />
+                    <MenuItem x:Name="MenuSemanticAnalyzer" Header="Semantic analyzer" IsCheckable="True" IsChecked="True" Click="MenuSemanticAnalyzer_Click"/>
+                </MenuItem>
+                <MenuItem x:Name="MenuHelpRoot" Header="Help" FontSize="14" FontWeight="SemiBold">
+                    <MenuItem x:Name="MenuAbout" Header="About...">
+                        <MenuItem.Icon>
+                            <Path Data="M11,9H13V7H11M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M11,17H13V11H11V17Z" Fill="#0072C6" Stretch="Uniform" Width="16" Height="16"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </MenuItem>
+            </Menu>
+        </Border>
+
+        <Border Grid.Row="2" x:Name="SettingsBorder" Background="#F0F4F9" BorderBrush="#0072C6" BorderThickness="4,1,1,1" CornerRadius="2" Margin="15,10,15,10" Padding="12,8">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock x:Name="TargetLanguageText" Text="Target language:" VerticalAlignment="Center" FontWeight="Bold" Margin="0,0,15,0" FontSize="15" Foreground="#111111"/>
+                <RadioButton x:Name="RbIlTarget" Content="Instruction List (IL)" IsChecked="True" VerticalAlignment="Center" Margin="0,0,20,0" FontWeight="SemiBold"/>
+                <RadioButton x:Name="RbLdTarget" Content="Ladder Diagram (LD)" VerticalAlignment="Center" Margin="0,0,20,0" FontWeight="SemiBold"/>
+            </StackPanel>
+        </Border>
+
+        <Grid Grid.Row="3" x:Name="MainEditorGrid" Margin="15,0,15,5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition x:Name="InputColumn" Width="*"/>
+                <ColumnDefinition x:Name="EditorSplitterColumn" Width="15"/>
+                <ColumnDefinition x:Name="OutputColumn" Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <DockPanel Grid.Row="0" LastChildFill="False" Margin="0,0,0,4" Height="28">
+                    <TextBlock x:Name="InputHeaderText" Text="SOURCE CODE (ST)" FontSize="13" FontWeight="Bold" VerticalAlignment="Bottom" Margin="0,0,0,2" Foreground="#888888"/>
+
+                    <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
+                        <Button x:Name="CopyStButton" ToolTip="Copy" Click="CopyStButton_Click" Style="{StaticResource IconButton}" Margin="0,0,5,0">
+                            <Path Data="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z" Fill="#555555" Stretch="Uniform" Width="14" Height="14"/>
+                        </Button>
+                        <Button x:Name="ClearButton" ToolTip="Clear" Click="ClearButton_Click" Style="{StaticResource IconButton}" Margin="0,0,5,0">
+                            <Path Data="M9,3V4H4V6H5V19A2,2 0 0,0 7,21H17A2,2 0 0,0 19,19V6H20V4H15V3H9M7,6H17V19H7V6M9,8V17H11V8H9M13,8V17H15V8H13Z" Fill="#D32F2F" Stretch="Uniform" Width="15" Height="15"/>
+                        </Button>
+                        <Button x:Name="MaximizeInputButton" ToolTip="Expand" Click="MaximizeInputButton_Click" Style="{StaticResource IconButton}">
+                            <Path x:Name="MaximizeInputIcon" Data="M4,4H20V20H4V4M6,8V18H18V8H6Z" Fill="#555555" Stretch="Uniform" Width="15" Height="15"/>
+                        </Button>
+                    </StackPanel>
+                </DockPanel>
+
+                <Border Grid.Row="1" BorderBrush="#555555" BorderThickness="2" CornerRadius="2" Background="White">
+                    <avalonEdit:TextEditor x:Name="InputEditor" FontFamily="Consolas" FontSize="14" ShowLineNumbers="True" BorderThickness="0" Padding="5,5,0,0"/>
+                </Border>
+            </Grid>
+
+            <GridSplitter x:Name="EditorSplitter" Grid.Column="1" Width="5" HorizontalAlignment="Center" Background="#CCCCCC" Cursor="SizeWE" Margin="0,32,0,0"/>
+
+            <Grid Grid.Column="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <DockPanel Grid.Row="0" LastChildFill="False" Margin="0,0,0,4" Height="28">
+                    <TextBlock x:Name="OutputHeaderText" Text="TRANSLATION RESULT" FontSize="13" FontWeight="Bold" VerticalAlignment="Bottom" Margin="0,0,0,2" Foreground="#888888"/>
+
+                    <StackPanel DockPanel.Dock="Right" Orientation="Horizontal">
+                        <Button x:Name="CopyButton" ToolTip="Copy" Click="CopyButton_Click" Style="{StaticResource IconButton}" Margin="0,0,5,0">
+                            <Path Data="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z" Fill="#555555" Stretch="Uniform" Width="14" Height="14"/>
+                        </Button>
+                        <Button x:Name="MaximizeOutputButton" ToolTip="Expand" Click="MaximizeOutputButton_Click" Style="{StaticResource IconButton}">
+                            <Path x:Name="MaximizeOutputIcon" Data="M4,4H20V20H4V4M6,8V18H18V8H6Z" Fill="#555555" Stretch="Uniform" Width="15" Height="15"/>
+                        </Button>
+                    </StackPanel>
+                </DockPanel>
+
+                <Border Grid.Row="1" BorderBrush="#555555" BorderThickness="2" CornerRadius="2" Background="White">
+                    <avalonEdit:TextEditor x:Name="OutputEditor" IsReadOnly="True" FontFamily="Consolas" FontSize="14" ShowLineNumbers="True" Background="#FAFAFA" BorderThickness="0" Padding="5,5,0,0"/>
+                </Border>
+            </Grid>
+        </Grid>
+
+        <GridSplitter x:Name="ConsoleSplitter" Grid.Row="4" Height="5" HorizontalAlignment="Stretch" Background="#CCCCCC" Cursor="SizeNS" Margin="15,5"/>
+
+        <Grid Grid.Row="5" x:Name="ConsoleArea" Margin="15,0,15,15">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.Column="0" Margin="0,0,15,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <TextBlock x:Name="ConsoleHeaderText" Grid.Row="0" Text="Console" FontWeight="Bold" FontSize="15" Margin="0,0,0,5" Foreground="#111111"/>
+
+                <Border Grid.Row="1" BorderBrush="#555555" BorderThickness="2" CornerRadius="2" Background="White">
+                    <RichTextBox x:Name="LogConsole" IsReadOnly="True" VerticalScrollBarVisibility="Auto" FontFamily="Consolas" FontSize="13" Padding="5" BorderThickness="0">
+                        <FlowDocument></FlowDocument>
+                    </RichTextBox>
+                </Border>
+            </Grid>
+
+            <Button x:Name="TranslateButton" Grid.Column="1" Width="200" Height="50" VerticalAlignment="Bottom" 
+                    Click="TranslateButton_Click" Style="{StaticResource MainActionButton}" Content="TRANSLATE" ToolTip="Translate"/>
+        </Grid>
+
+    </Grid>
+</Window>
