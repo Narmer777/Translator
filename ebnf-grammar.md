@@ -1,3 +1,5 @@
+```ebnf
+
 <program> ::= { <statement> }
 
 <statement> ::= <assignment> | <if-statement>
