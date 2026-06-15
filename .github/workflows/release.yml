@@ -71,4 +71,4 @@ jobs:
           $version = "${{ inputs.version }}"
           gh release create $version $env:RELEASE_ARCHIVE `
             --title "Translator $version" `
-            --notes "Manual release of Translator for Windows x64. The application translates the supported ST/LTL subset to IL and LD export formats for CoDeSys 2.3."
+            --notes "Release of Translator for Windows x64. The application translates the supported ST/LTL subset to IL and LD export formats for CoDeSys 2.3."
