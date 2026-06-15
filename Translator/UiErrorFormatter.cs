@@ -21,6 +21,9 @@ public static class UiErrorFormatter
             LexerErrorCode.UnclosedComment => ru
                 ? "Незакрытый комментарий."
                 : "Unclosed comment.",
+            LexerErrorCode.InvalidIdentifier => ru
+                ? $"Некорректный идентификатор '{exception.Details}'."
+                : $"Invalid identifier '{exception.Details}'.",
             _ => ru ? "Лексическая ошибка." : "Lexical error."
         };
 
@@ -138,8 +141,8 @@ public static class UiErrorFormatter
     {
         return line.HasValue && column.HasValue
             ? ru
-                ? $"Строка {line}, колонка {column}: {message}"
-                : $"Line {line}, column {column}: {message}"
+                ? $"Строка {line}, Столбец {column}: {message}"
+                : $"Line {line}, Column {column}: {message}"
             : message;
     }
 }

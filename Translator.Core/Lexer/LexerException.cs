@@ -7,7 +7,8 @@ public enum LexerErrorCode
 {
     UnknownSymbol,
     IncompleteAssign,
-    UnclosedComment
+    UnclosedComment,
+    InvalidIdentifier
 }
 
 /// <summary>
@@ -36,6 +37,7 @@ public class LexerException : Exception
             LexerErrorCode.UnknownSymbol => $"Неизвестный символ '{details}' на строке {line}, столбец {column}.",
             LexerErrorCode.IncompleteAssign => $"Неожиданный символ ':' на строке {line}, столбец {column}. Возможно, вы имели в виду ':='?",
             LexerErrorCode.UnclosedComment => $"Незакрытый комментарий. Комментарий начался на строке {line}, столбец {column}.",
+            LexerErrorCode.InvalidIdentifier => $"Некорректный идентификатор '{details}' на строке {line}, столбец {column}.",
             _ => $"Лексическая ошибка на строке {line}, столбец {column}."
         };
     }

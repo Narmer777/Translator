@@ -78,7 +78,7 @@ public class SemanticException : Exception
         };
 
         return line.HasValue && column.HasValue
-            ? $"Строка {line}, колонка {column}: {message}"
+            ? $"Строка {line}, Столбец {column}: {message}"
             : message;
     }
 }

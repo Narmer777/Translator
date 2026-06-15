@@ -92,7 +92,53 @@ public class Tokenizer
             return new Token(keywordType, value, startLine, startColumn);
         }
 
+        if (!IsValidIdentifier(value))
+        {
+            throw new LexerException(LexerErrorCode.InvalidIdentifier, startLine, startColumn, value);
+        }
+
         return new Token(TokenType.ID, value, startLine, startColumn);
+    }
+
+    private static bool IsValidIdentifier(string value)
+    {
+        string[] parts = value.Split(LexerConstants.Dot);
+        if (parts.Length is not (1 or 2)) return false;
+
+        foreach (string part in parts)
+        {
+            if (!IsValidNamePart(part)) return false;
+        }
+
+        return true;
+    }
+
+    private static bool IsValidNamePart(string value)
+    {
+        if (string.IsNullOrEmpty(value)) return false;
+
+        int startIndex = 0;
+        if (value[0] == LexerConstants.Underscore)
+        {
+            if (value.Length == 1 || !char.IsLetter(value[1])) return false;
+            startIndex = 2;
+        }
+        else if (!char.IsLetter(value[0]))
+        {
+            return false;
+        }
+        else
+        {
+            startIndex = 1;
+        }
+
+        for (int i = startIndex; i < value.Length; i++)
+        {
+            char c = value[i];
+            if (!char.IsLetterOrDigit(c) && c != LexerConstants.Underscore) return false;
+        }
+
+        return true;
     }
 
     /// <summary>

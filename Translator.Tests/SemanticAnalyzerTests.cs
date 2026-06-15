@@ -580,7 +580,7 @@ public class SemanticAnalyzerTests
 
         Assert.Equal(1, exception.Line);
         Assert.Equal(18, exception.Column);
-        Assert.Contains("Строка 1, колонка 18", exception.Message);
+        Assert.Contains("Строка 1, Столбец 18", exception.Message);
     }
 
     /// <summary>
