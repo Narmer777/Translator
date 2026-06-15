@@ -1,4 +1,3 @@
-```ebnf
 <program> ::= { <statement> }
 
 <statement> ::= <assignment> | <if-statement>
@@ -21,9 +20,9 @@
 
 <primary> ::= <identifier> | <bool_literal> | "(" <expression> ")"
 
-<identifier> ::= <name> { "." <name> }
+<identifier> ::= <name> [ "." <name> ]
 
-<name> ::= ( <letter> | "_" ) { <letter> | <digit> | "_" }
+<name> ::= <letter> { <letter> | <digit> | "_" }  | "_" <letter> { <letter> | <digit> | "_" }
 
 <letter> ::= "A" | ... | "Z" | "a" | ... | "z"
 
